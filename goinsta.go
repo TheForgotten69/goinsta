@@ -376,30 +376,30 @@ func (inst *Instagram) sendAdID() error {
 // Login performs instagram login.
 //
 // Password will be deleted after login
-func (inst *Instagram) Login() error {
-	err := inst.readMsisdnHeader()
+func (inst *Instagram) Login() (err error) {
+	err = inst.readMsisdnHeader()
 	if err != nil {
-		return err
+		return
 	}
 
 	err = inst.syncFeatures()
 	if err != nil {
-		return err
+		return
 	}
 
 	err = inst.zrToken()
 	if err != nil {
-		return err
+		return
 	}
 
 	err = inst.sendAdID()
 	if err != nil {
-		return err
+		return
 	}
 
 	err = inst.contactPrefill()
 	if err != nil {
-		return err
+		return
 	}
 
 	result, err := json.Marshal(
@@ -416,7 +416,7 @@ func (inst *Instagram) Login() error {
 		},
 	)
 	if err != nil {
-		return err
+		return
 	}
 	body, err := inst.sendRequest(
 		&reqOptions{
@@ -435,15 +435,18 @@ func (inst *Instagram) Login() error {
 	res := accountResp{}
 	err = json.Unmarshal(body, &res)
 	if err != nil {
-		return err
+		return
 	}
 
 	inst.Account = &res.Account
 	inst.Account.inst = inst
 	inst.rankToken = strconv.FormatInt(inst.Account.ID, 10) + "_" + inst.uuid
-	inst.zrToken()
+	err = inst.zrToken()
+	if err != nil {
+		return
+	}
 
-	return err
+	return
 }
 
 // Logout closes current session
