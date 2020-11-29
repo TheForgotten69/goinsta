@@ -1049,7 +1049,7 @@ func (insta *Instagram) postPhoto(photo io.Reader, photoCaption string, quality 
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("invalid status code, result: %s", resp.Status)
+		return nil, fmt.Errorf("invalid status code, result: %s with body %s", resp.Status, string(body))
 	}
 	var result struct {
 		UploadID       string      `json:"upload_id"`
