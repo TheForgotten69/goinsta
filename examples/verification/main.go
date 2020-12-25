@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ahmdrz/goinsta"
+	"github.com/TheForgotten69/goinsta/v2"
 	"github.com/tcnksm/go-input"
 )
 
