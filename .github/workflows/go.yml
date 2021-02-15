@@ -16,8 +16,12 @@ jobs:
         uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
+      
 
-      - name: Vet
+      - name: sync-vendor
+        run: make sync-vendor
+
+      - name: fmt check
         run: make fmt-lint
     
   vet:
@@ -35,5 +39,8 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: sync-vendor
+        run: make sync-vendor
+        
       - name: Vet
         run: make vet
