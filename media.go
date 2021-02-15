@@ -1179,8 +1179,12 @@ func (insta *Instagram) postVideo(video io.Reader, title string, caption string,
 
 func (insta *Instagram) postPhoto(photo io.Reader, photoCaption string, quality int, filterType int, isSidecar bool) (map[string]interface{}, error) {
 	uploadID := time.Now().Unix()
-	rndNumber := rand.Intn(9999999999-1000000000) + 1000000000
-	name := strconv.FormatInt(uploadID, 10) + "_0_" + strconv.Itoa(rndNumber)
+
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	rndNumber := 1_000_000_000 + rand.Int63n(9_999_999_999-1_000_000_000)
+
+	name := strconv.FormatInt(uploadID, 10) + "_0_" + strconv.FormatInt(rndNumber, 10)
 	buf := new(bytes.Buffer)
 	_, err := buf.ReadFrom(photo)
 	if err != nil {

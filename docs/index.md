@@ -25,9 +25,9 @@
 package main
 
 import (
-	"fmt"
+ "fmt"
 
-	"gopkg.in/ahmdrz/goinsta.v2"
+ "gopkg.in/ahmdrz/goinsta.v2"
 )
 
 func main() {  
@@ -45,20 +45,20 @@ func main() {
 
 ### Projects using `goinsta`
 
-- [go-instabot](https://github.com/tducasse/go-instabot)
-- [nick_bot](https://github.com/icholy/nick_bot)
-- [instagraph](https://github.com/ahmdrz/instagraph)
-- [icrawler](https://github.com/themester/icrawler)
-- [ermes](https://github.com/borteo/ermes)
-- [instafeed](https://github.com/falzm/instafeed)
-- [goinstadownload](https://github.com/alejoloaiza/goinstadownload)
-- [InstagramStoriesDownloader](https://github.com/DiSiqueira/InstagramStoriesDownloader)
-- [gridcube-challenge](https://github.com/rodrwan/gridcube-challenge)
-- [nyaakitties](https://github.com/gracechang/nyaakitties)
-- [InstaFollower](https://github.com/Unanoc/InstaFollower)
-- [follow-sync](https://github.com/kirsle/follow-sync)
-- [Game DB](https://github.com/gamedb/gamedb)
-- ...
+* [go-instabot](https://github.com/tducasse/go-instabot)
+* [nick_bot](https://github.com/icholy/nick_bot)
+* [instagraph](https://github.com/ahmdrz/instagraph)
+* [icrawler](https://github.com/themester/icrawler)
+* [ermes](https://github.com/borteo/ermes)
+* [instafeed](https://github.com/falzm/instafeed)
+* [goinstadownload](https://github.com/alejoloaiza/goinstadownload)
+* [InstagramStoriesDownloader](https://github.com/DiSiqueira/InstagramStoriesDownloader)
+* [gridcube-challenge](https://github.com/rodrwan/gridcube-challenge)
+* [nyaakitties](https://github.com/gracechang/nyaakitties)
+* [InstaFollower](https://github.com/Unanoc/InstaFollower)
+* [follow-sync](https://github.com/kirsle/follow-sync)
+* [Game DB](https://github.com/gamedb/gamedb)
+* ...
 
 ### Legal
 
@@ -69,15 +69,15 @@ This code is in no way affiliated with, authorized, maintained, sponsored or end
 Goinsta used gopkg.in as versioning control. Stable new API is the version v2.0. You can get it using:
 
 ```bash
-$ go get -u -v gopkg.in/ahmdrz/goinsta.v2
+go get -u -v gopkg.in/ahmdrz/goinsta.v2
 ```
 
-Or 
+Or
 
 If you have `GO111MODULE=on`
 
-```
-$ go get -u github.com/ahmdrz/goinsta/v2
+```bash
+go get -u github.com/TheForgotten69/goinsta/v2
 ```
 
 ### Donate

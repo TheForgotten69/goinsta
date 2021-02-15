@@ -7,8 +7,11 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"testing"
 
-	"github.com/ahmdrz/goinsta"
+	"github.com/TheForgotten69/goinsta/v2"
+	"github.com/TheForgotten69/goinsta/v2/utilities"
+	"github.com/stretchr/testify/require"
 )
 
 func readFromBase64(base64EncodedString string) (*goinsta.Instagram, error) {
@@ -42,4 +45,19 @@ func getRandomAccount() (*goinsta.Instagram, error) {
 
 	encodedAccount := accounts[rand.Intn(len(accounts))]
 	return readFromBase64(encodedAccount)
+}
+
+func Test_getbase64(t *testing.T) {
+	t.Skip()
+
+	// run this test locally to get base64 encoded session that will be exported to env variables and used in tests.
+
+	inst := goinsta.New("username", "password")
+
+	require.NoError(t, inst.Login())
+
+	base64, err := utilities.ExportAsBase64String(inst)
+	require.NoError(t, err)
+
+	t.Log(base64)
 }

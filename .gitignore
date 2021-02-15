@@ -23,7 +23,8 @@ _testmain.go
 *.test
 *.prof
 
-*.out
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out*
 
 # ignore Intellij products technical folder
 .idea/
@@ -31,3 +32,7 @@ _testmain.go
 .vscode/
 .tests/
 examples/configs/
+
+vendor/
+
+tools/vendor/

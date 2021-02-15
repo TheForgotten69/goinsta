@@ -1,18 +1,19 @@
 package tests
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
 
 func TestFeedTagLike(t *testing.T) {
 	insta, err := getRandomAccount()
-	if err != nil {
-		t.Fatal(err)
-		return
-	}
+	require.NoError(t, err)
+
 	feedTag, err := insta.Feed.Tags("golang")
-	if err != nil {
-		t.Fatal(err)
-		return
-	}
+	require.NoError(t, err)
+
 	for _, item := range feedTag.RankedItems {
 		// media, err := insta.GetMedia(item.ID)
 		// if err != nil {
@@ -21,41 +22,24 @@ func TestFeedTagLike(t *testing.T) {
 		// }
 		// err = media.Items[0].Like()
 
-		err = item.Like()
-		if err != nil {
-			t.Fatal(err)
-			return
-		}
+		require.NoError(t, item.Like())
+
 		t.Logf("media %s liked by goinsta", item.ID)
 	}
 }
 
 func TestFeedTagNext(t *testing.T) {
 	insta, err := getRandomAccount()
-	if err != nil {
-		t.Fatal(err)
-		return
-	}
+	require.NoError(t, err)
+
 	feedTag, err := insta.Feed.Tags("golang")
-	if err != nil {
-		t.Fatal(err)
-		return
-	}
+	require.NoError(t, err)
 
 	initNextID := feedTag.NextID
-	success := feedTag.Next()
-	if !success {
-		t.Fatal("Failed to fetch next page")
-		return
-	}
-	gotStatus := feedTag.Status
+	require.True(t, feedTag.Next(), "Failed to fetch next page")
 
-	if gotStatus != "ok" {
-		t.Errorf("Status = %s; want ok", gotStatus)
-	}
+	assert.Equal(t, "ok", feedTag.Status)
 
 	gotNextID := feedTag.NextID
-	if gotNextID == initNextID {
-		t.Errorf("NextID must differ after FeedTag.Next() call")
-	}
+	assert.NotEqual(t, initNextID, gotNextID, "NextID must differ after FeedTag.Next() call")
 }
