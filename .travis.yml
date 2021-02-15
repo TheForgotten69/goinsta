@@ -1,14 +1,69 @@
+os: linux
+dist: xenial
 language: go
 
-go:
-  - master
+install: false
+
+git:
+  depth: false
 
 env:
  global:
-  - GO111MODULE=off
+  - GO111MODULE=on
+
+stages:
+  - linting # need to check on amd and arm - different int max value.
+  - tests # need to check on amd and arm - different int max value.
+
+jobs:
+  include:
+    # linting 
+    - stage: linting
+      name: "linting OS=linux; ARCH=arm64; GO=1.15.x"
+      install: skip
+      os: linux
+      arch: arm64
+      go: 1.15.x
+      before_script:
+        - make sync-vendor
+      script:
+        - make vet
+        - make fmt-lint
+
+    - stage: linting
+      name: "linting OS=linux; ARCH=amd64; GO=1.15.x"
+      install: skip
+      os: linux
+      arch: amd64
+      go: 1.15.x
+      before_script:
+        - make sync-vendor
+      script:
+        - make vet
+    
+    # testing
+    - stage: tests
+      name: "tests: OS=linux; ARCH=amd64; GO=GO=1.15.x"
+      os: linux
+      arch: amd64
+      go: GO=1.15.x
+      install: skip
+      before_script:
+        - make sync-vendor
+      script:
+        - make test
+
+    
+    - stage: tests
+      name: "tests: OS=linux; ARCH=arm64; GO=GO=1.15.x"
+      os: linux
+      arch: arm64
+      go: GO=1.15.x
+      install: skip
+      before_script:
+        - make sync-vendor
+      script:
+        - make test
+
+
   
-script:
-  - chmod +x .travis.gofmt.sh
-  - gofmt -d .
-  - go vet -v ./...
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then go test -v ./... ; fi'
