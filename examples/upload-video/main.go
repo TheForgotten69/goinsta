@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"flag"
 	"log"
 	"net/http"
 	"os"
@@ -8,7 +10,13 @@ import (
 	"github.com/TheForgotten69/goinsta/v2"
 )
 
+var (
+	filepath = flag.String("filepath", "video.mp4", "Video file path")
+)
+
 func main() {
+	flag.Parse()
+	log.Println("filepath", *filepath)
 	insta := goinsta.New(
 		os.Getenv("INSTAGRAM_USERNAME"),
 		os.Getenv("INSTAGRAM_PASSWORD"),
@@ -25,17 +33,23 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	resp, err := client.Do(request)
+	thumbnail, err := client.Do(request)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	defer resp.Body.Close()
+	defer thumbnail.Body.Close()
 
-	postedPhoto, err := insta.UploadPhoto(resp.Body, "awesome! :)", 1, 1)
+	log.Println("Read video file")
+	file, err := os.Open(*filepath)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Printf("Success upload photo %s", postedPhoto.ID)
+	postedVideo, err := insta.UploadVideo(bufio.NewReader(file), "awesomeVID", "awesome! :)", thumbnail.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("Success upload video %s", postedVideo.ID)
 }
