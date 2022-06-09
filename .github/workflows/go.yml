@@ -1,0 +1,46 @@
+name: Go
+on: [push]
+jobs:
+
+  fmt:
+    name: fmt
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.15
+        uses: actions/setup-go@v2.1.3
+        with:
+          go-version: 1.15
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+      
+
+      - name: sync-vendor
+        run: make sync-vendor
+
+      - name: fmt check
+        run: make fmt-lint
+    
+  vet:
+    name: Vet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.15
+        uses: actions/setup-go@v2.1.3
+        with:
+          go-version: 1.15
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: sync-vendor
+        run: make sync-vendor
+        
+      - name: Vet
+        run: make vet
